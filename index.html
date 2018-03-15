@@ -1,0 +1,435 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Visualizando datos con D3.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <style>
+	img {
+		border: none !important;
+		box-shadow: none !important;
+	}
+      .whitebg {
+        background: white;
+      }
+	  
+	  .keepitcutre {
+		  font-family: 'Comic Sans MS' !important;
+	  }
+
+	  .bigger {
+		  font-size: 110% !important;
+	  }
+    </style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			    <section class="fig-container"
+					data-fig-id="fig-wave"
+					data-file="examples/collision.html"
+					data-transitions="0">
+				  <h2>Visualizando datos con D3.js</h2>
+				  <h3>Fabio Souto</h3>
+				  <p>
+					  <small class="whitebg"><a href="https://twitter.com/fsoutomo">https://twitter.com/fsoutomo</a></small>
+					  <small class="whitebg"><a href="https://github.com/fasouto/">https://github.com/fasouto/</a></small>
+				  </p>
+				</section>
+				<section>
+					<h2>¿Quién soy?</h2>
+					<ul>
+						<li>👷 Autónomo</li>
+						<li>🐍 Más de Python que de JavaScript</li>
+						<li><a href="https://github.com/fasouto/">github.com/fasouto</a></li>
+						<li>fabio@fabiosouto.me</li>
+						<li>Slack de JavaScript Ourense</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Visualización de datos</h2>
+					<p><a href="https://pudding.cool/">The Pudding - pudding.cool</a></p>
+					<p><a href="https://datavizcatalogue.com/">Dataviz catalogue</a></p>
+                <p><a href="https://www.nytimes.com/interactive/2014/upshot/buy-rent-calculator.html">Comprar vs alquilar</a></p>
+				</section>
+				<section>
+					<img src="img/truthful.jpg">
+				</section>
+        <section data-background="img/d3.jpg" data-background-size="contain">
+          <span class="whitebg"><a href="//d3js.org">d3js.org</a></span>
+				</section>
+				<section>
+					<h1>D3.js</h1>
+					<ul>
+						<li>D3 - <strong>D</strong>ata <strong>D</strong>riven <strong>D</strong>ocuments</li>
+						<li>Librería(s) con <a href="https://github.com/d3/d3/blob/master/API.md">primitivas comunes de gráficos</a>: escalas, ejes, proyecciones...</li>
+						<li>Desarrollador principal <a href="https://bost.ocks.org/mike/">Mike Bostock</a></li>
+						<li>Miles de ejemplos - <a href="https://bl.ocks.org/">bl.ocks.org</a></li>
+					</ul>
+				</section>
+				<section>
+					<h2>Que <span style="font-size:150%;">NO</span> es D3.js</h2>
+					<p>No es una librería de gráficos (charts) ni de mapas. d3.barChart()</p>
+					<p><a href="https://github.com/fasouto/awesome-dataviz">Para eso ya hay otros proyectos</a> (algunos usan D3)</p>
+					<p>No es una API de gráficos (graphics)</p>
+					<p></p>
+				</section>
+				<section>
+					<h3>1. Interfaz declarativa</h3>
+					<p>Dile a D3 qué quieres, no cómo lo tiene que hacer</p>
+					<h3>2. Data binding</h3>
+					<p>Asociar datos a elementos del DOM</p>
+					<h3>3. Estandares abiertos</h3>
+					<p>D3 funciona con HTML, CSS, SVG, canvas...</p>
+				</section>
+				<section>
+					<ul>
+						<li>Babel?</li>
+						<li>Webpack?</li>
+						<li>NPM?</li>
+						<li>Gulp?</li>
+						<li>Bower?</li>
+					</ul>
+				</section>
+				<section>
+					<h1 class="keepitcutre">Keep it cutre</h1>
+				</section>
+				<section>
+					<h1 class="keepitcutre">Keep it cutre</h1>
+					<a href="https://github.com/fasouto/d3-talk">https://github.com/fasouto/d3-talk</a>
+				</section>
+				<section>
+					<h2>Hola D3</h2>
+<pre><code data-trim data-noescape>
+						&lt;!DOCTYPE html&gt; 
+						&lt;html&gt; 
+						  &lt;head&gt;
+						  &lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt; 
+						  &lt;/head&gt; 
+						  &lt;body&gt; 
+						    &lt;div id=&quot;foo&quot;&gt;&lt;/div&gt; 
+						  &lt;/body&gt; 
+						  &lt;script type=&quot;text/javascript&quot;&gt; 
+						    d3.select(&quot;#foo&quot;) 
+						     .text(&quot;Hola D3&quot;) 
+						     .style(&quot;color&quot;, &quot;blue&quot;); 
+						  &lt;/script&gt; 
+						&lt;/html&gt;
+</code></pre>
+<p><span style="color:blue">Hola D3</span></p>
+				</section>
+				<section>
+					<h2>jQuery?</h2>
+<pre><code data-trim data-noescape>
+$("#foo")
+  .text("Hola jQuery")
+  .css("color", "blue");
+</code></pre>
+				</section>
+
+				<section>
+						<p>
+							D3 asocia datos con elementos del DOM y <strong>modifica sus propiedades</strong> en base a ellos
+						</p>
+					</section>
+					<section>
+							<h2>Primero seleccionamos</h2>
+		<pre><code data-trim data-noescape>
+			d3.select("#some-id");
+			d3.select("body").selectAll("p");
+			var mielemento = d3.select("#foo");
+		</code></pre>
+						<p>D3 usa el patrón de diseño <a href="http://alignedleft.com/tutorials/d3/chaining-methods"></a>'chaining'</a></p>
+						</section>
+				<section>
+					<h2>Manipular selecciones</h2>
+<pre><code data-trim data-noescape>
+		d3.select("body")
+		    .style("background", "steelblue");
+</code></pre>
+<h3>Con animaciones</h3>
+<pre><code data-trim data-noescape>
+		d3.select("body")
+		    .style("background", "green")
+		  .transition()
+		    .style("background", 'steelblue');
+</code></pre>
+			</section>
+			<section>
+			<h2>Podemos usar funciones</h2>
+			<pre><code data-trim data-noescape>
+d3.select("body")
+  .style('background', function() {
+    return '#'+(Math.random()*0x16777215<<0).toString(16)
+  });
+			</code></pre>
+<small><a href="https://www.paulirish.com/2009/random-hex-color-code-snippets">El generador de colores esta sacado de aquí</a></small>
+						</section>
+			<section>
+					<p>
+						D3 <strong class="bigger">asocia datos con elementos del DOM</strong> y modifica sus propiedades en base a ellos
+					</p>
+				</section>
+				<section>
+					<h2>Obteniendo datos</h2>
+<pre><code data-trim data-noescape>
+  d3.csv('archivo.csv', function(error, data) {
+    // hago mis cosicas
+  });
+  var data = d3.json()
+  d3.tsv()
+  ...
+</code></pre>
+				</section>
+			<section>
+				<h2>Data binding</h2>
+<pre><code data-trim data-noescape>
+miul = d3.select('ul');
+
+// Data binding
+miul.selectAll('li')
+  .data(['hola','javascript','ourense']);
+
+// Si no existen
+miul.enter()
+  .append('li')
+  .text(function (d) {
+    return d;
+  });
+</code></pre>
+<h2>&#x2193;</h2>
+<pre><code><ul>
+  <li>hola</li>
+  <li>javascript</li>
+  <li>ourense</li>
+</ul>
+</code></pre>
+</section>
+<section>
+<img src="img/databinding.png"/>
+</section>
+			<section>
+				<h2>Gráfico de barras</h2>
+<pre><code data-trim>
+<style>
+.chart div {
+	background-color: steelblue;
+	text-align: right;
+	margin: 1px;
+	color: white;
+}
+</style>
+
+<div class="chart">
+	<div style="width: 40px;">4</div>
+	<div style="width: 80px;">8</div>
+	<div style="width: 150px;">15</div>
+	<div style="width: 400px;">40</div>
+</div>
+</code></pre>			
+				<style>
+					.chart div {
+						background-color: steelblue;
+						text-align: right;
+						margin: 1px;
+						color: white;
+					}
+				</style>
+					
+				<div class="chart">
+					<div style="width: 40px;">4</div>
+					<div style="width: 80px;">8</div>
+					<div style="width: 150px;">15</div>
+					<div style="width: 400px;">40</div>
+				</div>
+			</section>
+			<section>
+				<h2>El mismo gráfico en D3</h2>
+				<a href="examples/barras-muysimple.html">&#x2197; abrir ejemplo</a>
+			</section>
+			<section>
+				<h2>Vamos a mejorarlo</h2>
+<pre><code data-trim>
+<style>
+.chart div {
+	background-color: steelblue;
+	text-align: right;
+	margin: 1px;
+	color: white;
+}
+</style>
+<div id="barras"></div>
+<script>
+var data = [4, 8, 15, 40];
+
+var x = d3.scaleLinear()
+	.domain([0, d3.max(data)])
+	.range([0, 450]);
+
+d3.select("#barras")
+	.selectAll("div")
+	.data(data)
+	.enter().append("div")
+	.style("width", function(d) { return x(d) + "px"; })
+	.text(function(d) { return d; });
+</script>
+</code></pre>
+<a href="examples/barras-simple.html">&#x2197; abrir ejemplo</a><p>
+<a href="https://bost.ocks.org/mike/bar/">Let's make a bar chart</a>	
+</p>
+			</section>
+			<section>
+				<h2>D3 Crypto tracker</h2>
+				<a href="examples/crypto_simple.html">Abrir ejemplo sencillote</a><p>
+				<a href="examples/crypto_complete.html">Abrir ejemplo con API</a><p>
+			</section>
+			<section>
+				<h1>SVG</h1>
+				<p>Scalable Vector Graphics</p>
+			</section>
+			<section>
+				<img src="img/svgsupport.png">
+				<a href="https://caniuse.com/#feat=svg">https://caniuse.com/#feat=svg</a>
+			</section>
+			<section>
+				<h2>0,0</h2>
+				<img src="img/svgcoordinates.png">
+			</section>
+			<section>
+				<h1>rect</h1>
+<pre><code data-trim>
+<svg width="350px">
+  <rect x="0" y="10" width="100" height="100" />
+  <rect x="150" y="25" width="70" height="70" rx="20" ry="20" />
+  <rect x="200" y="10" width="100" height="100" style="fill:rgb(97, 0, 5);opacity:0.5" />
+</svg>
+</code></pre>
+				<svg width="350px">
+					<rect x="0" y="10" width="100" height="100"/>
+					<rect x="150" y="25" width="70" height="70" rx="20" ry="20"/>
+					<rect x="200" y="10" width="100" height="100" style="fill:rgb(97, 0, 5);opacity:0.5"/>
+				</svg>
+			</section>
+			<section>
+				<h1>circle</h1>
+<pre><code data-trim>
+	<svg>
+	  <circle cx="50" cy="50" r="50"/>
+	  <circle cx="170" cy="50" r="20"/>
+	  <circle cx="250" cy="50" r="30" fill="steelblue" stroke="black" />
+	</svg>
+</code></pre>
+				<svg>
+					<circle cx="50" cy="50" r="50"/>
+					<circle cx="170" cy="50" r="20"/>
+					<circle cx="250" cy="50" r="30" fill="steelblue" stroke="black" />
+				</svg>
+			</section>
+			<section>
+				<h1>g</h1>
+				<p>Elemento contenedor</p>
+<pre><code data-trim>
+<svg height="500" width="500">
+  <g transform="translate(150) rotate(45)">
+   <circle cx="50" cy="50" r="50"/>
+   <rect x="150" y="40" width="100" height="100"/>
+  </g>
+</svg>
+</code></pre>
+				<svg height="500" width="500">
+					<g transform="translate(150) rotate(45)">
+						<circle cx="50" cy="50" r="50"/>
+						<rect x="150" y="40" width="100" height="100"/>
+					</g>
+				</svg>
+      </section>
+      <section data-background="img/svgelements.png" data-background-size="contain">
+        <span class="whitebg">SVG tiene mucho más...</span>
+      </section>
+			<section>
+				<h2>Gráfico de barras con SVG</h2>
+				<p><a href="/examples/barras_svg.html" target="_blank">&#x2197; abrir ejemplo</a></p>
+      </section>
+			<section>
+				<h2>Enter, exit, update</h2>
+				<img src="img/enterupdateexit.png"/>
+				</section>
+				<section>
+				<h2>Enter, exit, update</h2>
+				<a href="https://bl.ocks.org/mbostock/3808218">explicacion de Mike Bostock</a>
+				<p><a href="https://bl.ocks.org/cmgiven/32d4c53f19aea6e528faf10bfe4f3da9">explicacion interactiva</a></p>
+      </section>
+      <section>
+        <h2>Gráficos en tiempo real</h2>
+        <p><a href="/examples/barchartsvg.html" target="_blank">&#x2197; abrir ejemplo</a></p>
+      </section>
+<section>
+	<h2>Eventos</h2>
+	<a href="examples/basketball.html">&#x2197; abrir ejemplo</a>
+</section>
+			<section>
+				<h2>Mapas</h2>
+				<p>D3 entiende GeoJSON and TopoJSON</p>
+				<a href="https://bl.ocks.org/mbostock/raw/3711652/">Ejemplo de proyecciones</a>
+			</section>
+			<section>
+				<h2>Layouts</h2>
+				<a href="examples/crypto_treemap.html">Crypto treemap</a>
+				<a href="https://bl.ocks.org/mbostock/4062045">Grafo</a>
+			</section>
+			<section>
+				<h1>¡Gracias!</h1>
+				<p>Presentación y código:</p>
+				<a href="http://github.com/fasouto/d3-talk">http://github.com/fasouto/d3-talk</a>
+			</section>
+			<section>
+				<h1>?</h1>
+			</section>
+			<section>
+				<h1>Sorteo JetBrains</h1>
+				<img width="20%" style="border:none;box-shadow:none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/JetBrains_Logo_2016.svg/512px-JetBrains_Logo_2016.svg.png">
+				<h2>kahoot.it</h2>
+				<h2>XXXX</h2>
+			</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				controls: false,
+				history: true,
+				center: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'https://d3js.org/d3.v4.min.js' },
+					{ src: 'node_modules/reveal.js-d3js/d3js.js' }
+				]
+			});
+		</script>
+	</body>
+</html>

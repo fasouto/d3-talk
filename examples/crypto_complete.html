@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D3 crypto dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+  </head>
+  <body>
+    <main role="main" class="container">
+      <h2>D3 Cryptocurrency dashboard</h2>
+      <table id="cryptoprices" class="table"></table>
+    </main>
+  </body>
+  <script type="text/javascript">
+
+    var table = d3.select('#cryptoprices'),
+    moneyFormat = d3.format("$,.0f"),
+    refreshTime = 300000,
+    tbody,
+    colorScale;
+
+    colorScale = d3.scaleLinear()
+      .domain([-20, 0, 20])
+      .range(['red', 'black', 'green']);
+
+    function createTableStructure(column_headers) {
+      // Add the header
+      table
+        .append('thead')
+        .append('tr')
+        .selectAll('th')
+        .data(column_headers)
+          .enter()
+            .append('th')
+            .text(function(column) { return column; })
+      // Add the table body
+      tbody = table.append('tbody');
+     }
+
+    function renderTableBody(data, columns) {
+      // Data binding
+      var rows = tbody.selectAll('tr')
+        .data(data)
+        .enter()
+          .append('tr');
+
+      var cells = rows.selectAll('td')
+        .data(function (row) {
+          return columns.map(function (column) {
+            return {column: column, value: row[column]};
+          });
+        });
+
+      // Update the nodes with the new data
+      cells
+        .enter()
+        .append('td')
+          .text(function (d) { 
+            switch (d.column) {
+              case 'percent_change_24h':
+                return d.value + '%';
+                break;
+              case 'market_cap_usd':
+              case '24h_volume_usd':
+                return moneyFormat(d.value); 
+                break;
+              case 'price_usd':
+                return '$' + d.value;
+                break
+              default:
+                return d.value;
+            }
+            })
+          .style('color', function(d) { 
+            if (d.column == 'percent_change_24h') {
+              return colorScale(d.value);
+            }
+            });
+      }
+
+    createTableStructure(['Name', 'Market cap', 'Volume(24h)', 'Price', 'Change(24h)']);
+
+    setInterval(function update() {
+      d3.json('https://api.coinmarketcap.com/v1/ticker/', function(error, data) {
+        renderTableBody(data, ['name', 'market_cap_usd', '24h_volume_usd', 'price_usd', 'percent_change_24h']);
+      })
+      return update;
+    }(), refreshTime);
+  </script>
+</html>

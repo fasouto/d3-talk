@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D3 crypto dashboard</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <style>
+      rect {
+        fill: rgb(39, 88, 90);
+        opacity: 0.3;
+        stroke: white;
+      }
+      text {
+        font-family: "Helvetica Neue", Helvetica, sans-serif;
+        fill: white;
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>D3 Cryptocurrency treemap</h2>
+
+    <svg>
+      <g></g>
+    </svg>
+
+  </body>
+  <script type="text/javascript">
+    var width = 1400,
+        height = 600;
+
+    // g es un contenedor
+    var g = d3.select('svg')
+      .attr('width', width)
+      .attr('height', height)
+      .select('g');
+
+    d3.json('https://api.coinmarketcap.com/v1/ticker/?limit=10', function(error, data) {       
+      var datacat = {'name': 'root', 'children': data}
+      renderTreemap(datacat);
+    });
+
+    function renderTreemap(data) {
+        // Create the layout
+        var treemapLayout = d3.treemap()
+          .size([width, height])
+          .paddingOuter(5);
+
+        var root = d3.hierarchy(data)
+          .sum(function (d) { return d.market_cap_usd; });
+
+        var nodes = root.descendants();
+        treemapLayout(root);
+
+        var nodes = d3.select('svg g')
+          .selectAll('g')
+          .data(nodes)
+          .enter()
+          .append('g')
+            .attr('transform', function(d) {return 'translate(' + [d.x0, d.y0] + ')'})
+
+        nodes
+          .append('rect')
+            .attr('width', function(d) { return d.x1 - d.x0; })
+            .attr('height', function(d) { return d.y1 - d.y0; })
+            
+        nodes
+          .append('text')
+            .attr('dx', 4)
+            .attr('dy', 14)
+            .text(function(d) {
+              if (typeof d.data.symbol !== 'undefined') {
+                return d.data.symbol + " (" + d.data.percent_change_24h + " %)";
+              }
+            })
+    }
+
+  </script>
+</html>

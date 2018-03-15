@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D3 basketball shots</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <style>
+        #shots { 
+          background:url(data/fullcourt.svg) no-repeat;
+          background-size: 100% 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <svg id="shots" width="1200" height="800"></svg>
+  </body>
+  <script type="text/javascript">
+    d3.csv('data/shot_log_cle.csv', function (data) {
+        var xScale = d3.scaleLinear()
+                  .domain([0, 500]) 
+                  .range([0, 810]);
+        var yScale = d3.scaleLinear()
+                  .domain([(0), (900)]) 
+                  .range([0, 1450]);
+
+        var shots = d3.select("#shots")
+            .selectAll('g')
+            .data(data)
+            .enter()
+            .append('g')
+              .attr('class', 'shot')
+              .attr("transform", function(d){
+                return "translate(" + .79 * xScale(d.x) + "," + .79 * yScale(d.y) + ")";
+            })
+            .on("mouseover", function(d){
+                    d3.select(this).raise()
+                        .append("text")
+                        .attr("class", "playername")
+                        .text(d.player + d.time)
+            })
+            .on("mouseout", function(d){
+                    d3.selectAll("text.playername").remove();
+                  })
+
+        shots.append("circle")
+            .attr("r", 4)
+            .attr("opacity", 0.5)
+            .style("fill", function(d){
+                if (d.outcome === "SCORED"){
+                    return "green";
+                }  else 
+                {
+                    return "red";
+                }
+            })
+
+    });
+
+
+  </script>
+</html>
+
