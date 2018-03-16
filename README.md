@@ -1,5 +1,7 @@
 Transparencias y ejemplos de la charla de D3.js para el [grupo de usuarios de JavaScript de Ourense](http://ourense.javascript.gal/).
 
+Las transparencias estan colgadas en [http://fabiosouto.me/d3-talk/](http://fabiosouto.me/d3-talk/)
+
 Los ejemplos estan en la carpeta `examples/`, muchos de ellos funcionan directamente, pero algunos de los que 
 necesitan obtener datos locales necesitan un servidor:
 
