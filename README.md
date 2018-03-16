@@ -7,7 +7,7 @@ necesitan obtener datos locales necesitan un servidor:
 
 ``` 
 # python 2
-python -m SimpleHTTPServer 8080
+python -m SimpleHTTPServer 8000
 # python 3
 python -m http.server
 ```
